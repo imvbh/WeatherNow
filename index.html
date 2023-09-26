@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherNow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <script src="script.js"></script>
+    <div class="container">
+        <div class="weather-header">
+            <form action="" class="weather-search">
+                <input type="text" placeholder="Search for a city" class="weather-searchform">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </form>
+
+
+            <div class="weather-units">
+                <span class="weather-unit-celsius">
+                    &#176C
+                </span>
+                <span class="weather-unit-farenheit">
+                    &#176F
+                </span>
+            </div>
+        </div>
+        <div class="weather-body">
+            <div class="basic-forecast">
+                <div class="weather--body">
+                    <h1 class="weather-city"></h1>
+                    <div class="weather-datetime">
+                        <p></p>
+                    </div>
+                    <div class="weather-icon">
+                    </div>
+                    <div class="weather-actual">
+                        <p class="weather-temp"></p>
+                        <div class="weather-forecast">
+                        </div>
+                    </div>
+                    <div class="weather-minmax">
+
+                    </div>
+                </div>
+
+                <div class="weather-info">
+
+                    <div class="weather-card">
+                        <i class="fa-solid fa-temperature-full"></i>
+                        <div>
+                            <p>Feels like</p>
+                            <p class="weather-feelslike"></p>
+                        </div>
+                    </div>
+                    <div class="weather-card">
+                        <i class="fa-solid fa-droplet"></i>
+                        <div>
+                            <p>Humidity</p>
+                            <p class="weather-humidity"></p>
+                        </div>
+                    </div>
+                    <div class="weather-card">
+                        <i class="fa-solid fa-wind"></i>
+                        <div>
+                            <p>Wind</p>
+                            <p class="weather-wind"></p>
+                        </div>
+                    </div>
+                    <div class="weather-card">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <div>
+                            <p>Visibility</p>
+                            <p class="weather-visibility"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="more-forecast">
+                <div class="future-cards">
+                    <div class="future-card">
+                        <div class="card-day">
+                            <span class="card-day-name">Tue</span>
+                            <span class="card-day-date">26</span>
+                        </div>
+                        <div class="card-icon">
+                            <img src="https://openweathermap.org/img/wn/10n.png" alt="" srcset="">
+                        </div>
+                        <div class="card-minmax">
+                            <span class="min-temp">28°C</span>°C
+                            <span class="max-temp">28°C</span>°C
+                        </div>
+                    </div>
+
+                    <!-- Repeat similar structure for Date 2 -->
+
+                    <div class="future-card">
+                        <div class="card-day">
+                            <span class="card-day-name">Wed</span>
+                            <span class="card-day-date">27</span>
+                        </div>
+                        <div class="card-icon">
+                            <img src="https://openweathermap.org/img/wn/10n.png" alt="" srcset="">
+                        </div>
+                        <div class="card-minmax">
+                            <span class="min-temp">27°C</span>°C
+                            <span class="max-temp">27°C</span>°C
+                        </div>
+                    </div>
+
+                    <!-- Repeat similar structure for Date 3 -->
+
+                    <div class="future-card">
+                        <div class="card-day">
+                            <span class="card-day-name">Wed</span>
+                            <span class="card-day-date">28</span>
+                        </div>
+                        <div class="card-icon">
+                            <img src="https://openweathermap.org/img/wn/04n.png" alt="" srcset="">
+                        </div>
+                        <div class="card-minmax">
+                            <span class="min-temp">26°C</span>°C
+                            <span class="max-temp">27°C</span>°C
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="lastsec">
+                    <div class="hourly-card">
+                        <div class="hour-weather">
+                            <div class="hour-icon ">
+                                <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="" srcset="">
+                            </div>
+                            <div class="hour-timedate">
+                                <div class="hour-time">
+                                    3PM
+                                </div>
+                                <div class="hour-date">25 Sept</div>
+                            </div>
+                            <div class="hour-forecast">
+                                26&#176C
+                            </div>
+                        </div>
+                        <div class="hour-weather">
+                            <div class="hour-icon">
+                                <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="" srcset="">
+                            </div>
+                            <div class="hour-timedate">
+                                <div class="hour-time">
+                                    3PM
+                                </div>
+                                <div class="hour-date">25 Sept</div>
+                            </div>
+                            <div class="hour-forecast">
+                                26&#176C
+                            </div>
+                        </div>
+                        <div class="hour-weather">
+                            <div class="hour-icon">
+                                <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="" srcset="">
+                            </div>
+                            <div class="hour-timedate">
+                                <div class="hour-time">
+                                    3PM
+                                </div>
+                                <div class="hour-date">25 Sept</div>
+                            </div>
+                            <div class="hour-forecast">
+                                26&#176C
+                            </div>
+                        </div>
+                        <div class="hour-weather">
+                            <div class="hour-icon">
+                                <img src="https://openweathermap.org/img/wn/10d@4x.png" alt="" srcset="">
+                            </div>
+                            <div class="hour-timedate">
+                                <div class="hour-time">
+                                    3PM
+                                </div>
+                                <div class="hour-date">25 Sept</div>
+                            </div>
+                            <div class="hour-forecast">
+                                26&#176C
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title">
+                        <h1>WeatherNow</h1>
+                        <p>Made by imvbh</p>
+                        <div class="socials">
+                            <a href="https://imvbh.github.io/Portfolio/"><i class="fa-solid fa-address-card"></i></a>
+                            <a href="https://github.com/imvbh/"><i class="fab fa-github"></i></a>
+                            <a href="instagram.com/imvbh/"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/imvbh/"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/20b8503bc7.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
