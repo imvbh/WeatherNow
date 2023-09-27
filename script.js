@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getWeather3Days();
     getWeather2();
     getWeather();
+    search.value='';
   });
 
   function convertTime(timestamp, timezone) {
