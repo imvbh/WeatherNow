@@ -13,6 +13,27 @@ document.addEventListener("DOMContentLoaded", function () {
   let wind = document.querySelector(".weather-wind");
   let visibility = document.querySelector(".weather-visibility");
 
+  document.querySelector(".weather-search").addEventListener("submit", (e) => {
+    let search = document.querySelector(".weather-searchform");
+
+    e.preventDefault();
+
+
+      setTimeout(function () {
+          var loaderWrapper = document.querySelector(".loader-wrapper");
+          loaderWrapper.style.transition = "opacity 0.1s"; // Optional: Add a CSS transition for a fade-out effect
+          loaderWrapper.style.opacity = "0";
+          loaderWrapper.remove()
+          // Set opacity to 0 to fade out
+      }, 1000); // 500 milliseconds (0.5 seconds) delay
+
+
+    currCity = search.value;
+    getWeather3Days();
+    getWeather2();
+    getWeather();
+  });
+
   function convertTime(timestamp, timezone) {
     const convertTime = timezone / 3600;
 
@@ -123,48 +144,69 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getWeather3Days() {
     const API_KEY = "cc1be744c458cd468f7a64b77e69685c";
-  
+
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${currCity}&appid=${API_KEY}&units=${units}&cnt=8`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${currCity}&appid=${API_KEY}&units=${units}&cnt=32`
     )
       .then((res) => res.json())
       .then((data) => {
         const forecastCards = document.querySelectorAll(".future-card");
-  
+
         // Get the current date
         const currentDate = new Date();
-  
+
+        // Initialize dayCount to 0
+        let dayCount = 0;
+
         // Loop through the forecast data
-        for (let i = 0; i < data.list.length && i < forecastCards.length; i++) {
+        for (let i = 0; i < data.list.length; i++) {
           const weatherData = data.list[i];
           const date = new Date(weatherData.dt * 1000);
-  
-          // Check if the date is for the next 3 days
-          if (
-            date.getDate() === currentDate.getDate() + 1 ||
-            date.getDate() === currentDate.getDate() + 2 ||
-            date.getDate() === currentDate.getDate() + 3
-          ) {
+
+          // Calculate the time difference in hours between the current date and the forecast date
+          const hoursDiff = Math.floor(
+            (date.getTime() - currentDate.getTime()) / (1000 * 60 * 60)
+          );
+
+          // Check if the time difference is approximately 24 hours
+          if (hoursDiff >= 24 * dayCount) {
             // Update the day name and date
-            const cardDayNameElement = forecastCards[i].querySelector(".card-day-name");
-            const cardDayDateElement = forecastCards[i].querySelector(".card-day-date");
-  
+            const cardDayNameElement =
+              forecastCards[dayCount].querySelector(".card-day-name");
+            const cardDayDateElement =
+              forecastCards[dayCount].querySelector(".card-day-date");
+
             const day = date.toLocaleString("en-US", { weekday: "short" });
             const dayNum = date.getDate();
-  
+            const month = date.toLocaleString("en-US", { month: "short" });
+
             cardDayNameElement.textContent = day;
-            cardDayDateElement.textContent = dayNum;
-  
+            cardDayDateElement.textContent = dayNum + " " + month;
+            console.log(month);
+
             // Update the weather icon
-            const cardIconElement = forecastCards[i].querySelector(".card-icon img");
+            const cardIconElement =
+              forecastCards[dayCount].querySelector(".card-icon img");
             const weatherIcon = weatherData.weather[0].icon;
             cardIconElement.src = `https://openweathermap.org/img/wn/${weatherIcon}.png`;
-  
+
             // Update the temperature
-            const minTempElement = forecastCards[i].querySelector(".min-temp");
-            const maxTempElement = forecastCards[i].querySelector(".max-temp");
-            minTempElement.textContent = `${Math.round(weatherData.main.temp_min)}°C`;
-            maxTempElement.textContent = `${Math.round(weatherData.main.temp_max)}°C`;
+            const minTempElement =
+              forecastCards[dayCount].querySelector(".min-temp");
+            const maxTempElement =
+              forecastCards[dayCount].querySelector(".max-temp");
+            minTempElement.textContent = `${Math.round(
+              weatherData.main.temp_min
+            )}°C`;
+            maxTempElement.textContent = `${Math.round(
+              weatherData.main.temp_max
+            )}°C`;
+
+            dayCount++; // Move to the next day
+
+            if (dayCount >= 3) {
+              break; // Exit the loop if we have filled the next three days
+            }
           }
         }
       })
@@ -172,8 +214,8 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error fetching 3-day forecast data:", error);
       });
   }
-  getWeather3Days();
 
+  getWeather3Days();
   getWeather2();
   getWeather(); // Call the function after the DOM is loaded
 });
