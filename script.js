@@ -12,28 +12,32 @@ document.addEventListener("DOMContentLoaded", function () {
   let humidity = document.querySelector(".weather-humidity");
   let wind = document.querySelector(".weather-wind");
   let visibility = document.querySelector(".weather-visibility");
+  const search = document.querySelector(".weather-searchform");
+  const error = document.querySelector(".error");
+  search.value = "";
 
-  document.querySelector(".weather-search").addEventListener("submit", (e) => {
-    let search = document.querySelector(".weather-searchform");
+  document
+    .querySelector(".weather-search")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const city = search.value.trim();
+      console.log(city);
 
-    e.preventDefault();
-
-
-      setTimeout(function () {
-          var loaderWrapper = document.querySelector(".loader-wrapper");
-          loaderWrapper.style.transition = "opacity 0.1s"; // Optional: Add a CSS transition for a fade-out effect
-          loaderWrapper.style.opacity = "0";
-          loaderWrapper.remove()
-          // Set opacity to 0 to fade out
-      }, 1000); // 500 milliseconds (0.5 seconds) delay
-
-
-    currCity = search.value;
-    getWeather3Days();
-    getWeather2();
-    getWeather();
-    search.value='';
-  });
+      try {
+        currCity = city;
+        await getWeather3Days();
+        await getWeather2();
+        await getWeather();
+        search.value = "";
+        error.innerHTML = ""; // Clear any previous error messages
+      } catch (error) {
+        if (error.message === "City not found") {
+          error.innerHTML = `"${city}" was not found. Please check the spelling.`;
+        } else {
+          error.innerHTML = "An error occurred.";
+        }
+      }
+    });
 
   function convertTime(timestamp, timezone) {
     const convertTime = timezone / 3600;
@@ -69,7 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${currCity}&appid=${API_KEY}&units=${units}`
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 404) {
+          throw new Error("City not found");
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log(data);
         city.textContent = `${data.name}, ${convertCountryCode(
@@ -89,6 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
         humidity.innerHTML = `${data.main.humidity.toFixed()}%`;
         wind.innerHTML = `${data.wind.speed.toFixed()} kmph`;
         visibility.innerHTML = `${data.visibility / 1000} km`;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }
 
@@ -98,7 +110,12 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${currCity}&appid=${API_KEY}&units=${units}&cnt=6`
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 404) {
+          throw new Error("City not found");
+        }
+        return res.json();
+      })
       .then((data) => {
         // Loop through the data.list array
         for (let i = 0; i < data.list.length; i++) {
@@ -149,7 +166,12 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${currCity}&appid=${API_KEY}&units=${units}&cnt=32`
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 404) {
+          throw new Error("City not found");
+        }
+        return res.json();
+      })
       .then((data) => {
         const forecastCards = document.querySelectorAll(".future-card");
 
@@ -183,7 +205,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             cardDayNameElement.textContent = day;
             cardDayDateElement.textContent = dayNum + " " + month;
-            console.log(month);
 
             // Update the weather icon
             const cardIconElement =
@@ -211,6 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
       })
+
       .catch((error) => {
         console.error("Error fetching 3-day forecast data:", error);
       });
@@ -218,5 +240,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   getWeather3Days();
   getWeather2();
-  getWeather(); // Call the function after the DOM is loaded
+  getWeather();
+  search.value = ""; // Call the function after the DOM is loaded
 });
