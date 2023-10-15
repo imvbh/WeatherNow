@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const hourIconElement =
               hourWeatherDiv.querySelector(".hour-icon img");
             const weatherIcon = weatherData.weather[0].icon;
-            hourIconElement.src = `https://openweathermap.org/img/wn/${weatherIcon}.png`;
+            hourIconElement.src = `https://openweathermap.org/img/wn/${weatherIcon}@4x.png`;
           }
         }
       })
@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const cardIconElement =
               forecastCards[dayCount].querySelector(".card-icon img");
             const weatherIcon = weatherData.weather[0].icon;
-            cardIconElement.src = `https://openweathermap.org/img/wn/${weatherIcon}.png`;
+            cardIconElement.src = `https://openweathermap.org/img/wn/${weatherIcon}@4x.png`;
 
             // Update the temperature
             const minTempElement =
